@@ -28,7 +28,9 @@ router.get("/productos/filtro", async(req,res)=>{
 
 	let token = req.query.token;
 	let filtro = req.query.filtro;
-	let qry = `SELECT CODPROD,DESPROD,DESMARCA,CODMEDIDA,EQUIVALE,COSTO,PRECIO,concat('Q',PRECIO) as QPRECIO, EXISTENCIA, EMPNIT FROM PRECIOS WHERE TOKEN='${token}' AND DESPROD LIKE '%${filtro}%'`
+	let tipo = req.query.tipo;
+
+	let qry = `SELECT CODPROD,DESPROD,DESMARCA,CODMEDIDA,EQUIVALE,COSTO,PRECIO,concat('Q',PRECIO) as QPRECIO, EXISTENCIA, EMPNIT FROM PRECIOS WHERE TOKEN='${token}' AND DESPROD LIKE '%${filtro}%' AND TIPOPROD='${tipo}'`
 	execute.Query(res,qry);
 
 });

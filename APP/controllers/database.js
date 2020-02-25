@@ -3,7 +3,7 @@ window.onload = function () {
     initiateDb();
 };
 //nombre de la base de datos
-const DbName = "ex-ventas";
+const DbName = "onne-ventas";
 
 function initiateDb() {
     

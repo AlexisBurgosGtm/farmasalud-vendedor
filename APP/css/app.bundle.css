@@ -1695,7 +1695,7 @@ html body {
       .nav-function-top .page-header .header-icon:not(.btn)[data-toggle="dropdown"] + .dropdown-menu {
         top: 4.125rem !important; }
     .nav-function-top .page-content-wrapper {
-      margin-top: 7.625rem; }
+      margin-top: 3.625rem; }
     .nav-function-top .page-wrapper {
       padding-left: 0; }
       .nav-function-top .page-wrapper .page-footer {
@@ -2338,7 +2338,7 @@ html body {
   position: relative; }
 
 .page-inner {
-  min-height: 100vh; }
+  min-height: 10vh; }
 
 .page-wrapper, .page-inner {
   display: -webkit-box;

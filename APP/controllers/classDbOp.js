@@ -131,6 +131,11 @@ classDbOp={
         let mapainiciado = false;
        DbConnection = new JsStore.Instance(DbName);
 
+        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
+        let map;
+
         DbConnection.select({
             From: "documentos"
             
@@ -138,11 +143,8 @@ classDbOp={
             docs.forEach(function (doc) {
                  if (doc.coddoc==GlobalCoddoc){
                     if(mapainiciado==false){
-                        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                        osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
-                
-                        var map = L.map('map-container').setView([doc.lat, doc.long], 15).addLayer(osm);
+               
+                        map = L.map('map-container').setView([doc.lat, doc.long], 15).addLayer(osm);
                         
                         L.marker([doc.lat, doc.long])
                         .addTo(map)

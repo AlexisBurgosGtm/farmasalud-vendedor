@@ -1,7 +1,7 @@
 let GlobalSelectedForm = 'viewLogin';
 let GlobalBool = 0;
 
-var CACHE = 'salesdonraul';
+var CACHE = 'onneventas';
 const staticAssets = [
   './',
   './manifest.json',
@@ -20,7 +20,8 @@ self.addEventListener('install', function(evt) {
 });
 
 self.addEventListener('fetch', function(evt) {
-  
+  var req = evt.request.clone();
+  console.log('service fetch: ' + req);
   /*
   if (navigator.onLine){
     var req = evt.request.clone();

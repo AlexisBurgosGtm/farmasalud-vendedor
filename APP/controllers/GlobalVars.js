@@ -29,3 +29,5 @@ let GlobalServerUrl = '';
 7) viewConfig = ventana de configuraciones
 8) viewInicio = ventana de datos iniciales
 */
+
+let GlobalLoader = `<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>`;

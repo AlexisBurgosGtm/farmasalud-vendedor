@@ -171,17 +171,18 @@ async function AgregarListeners(){
 
   let btnBuscarProductoFiltro = document.getElementById('btnBuscarProductoFiltro');
   btnBuscarProductoFiltro.addEventListener('click',()=>{
-    loadPreciosVentas(txtFiltroProducto.value);
+    let cmbTipoProd = document.getElementById('cmbTipoProd');
+    loadPreciosVentas(txtFiltroProducto.value, cmbTipoProd.value);
   })
 
 }
 // lista de precios para agregarlos a la venta
-async function loadPreciosVentas(filtro){
+async function loadPreciosVentas(filtro,tipo){
 
   let newsArticles = document.getElementById('contenedorVentas');
-  newsArticles.innerHTML = '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>';
+  newsArticles.innerHTML = GlobalLoader;
   
-  const response = await fetch(`${GlobalServerUrl}/api/productos/filtro?token=${GlobalToken}&filtro=${filtro}`);
+  const response = await fetch(`${GlobalServerUrl}/api/productos/filtro?token=${GlobalToken}&filtro=${filtro}&tipo=${tipo}`);
   const json = await response.json();        
   
   newsArticles.innerHTML = '';
