@@ -100,7 +100,7 @@ classDbOp={
 
         });
     },
-        GetTotalVentas: async(ContainerName)=>{
+    GetTotalVentas: async(ContainerName)=>{
         let contenedorT = document.getElementById(ContainerName);
         DbConnection = new JsStore.Instance(DbName);
 
@@ -135,27 +135,26 @@ classDbOp={
         osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
         let map;
+        map = L.map('map-container')
 
         DbConnection.select({
             From: "documentos"
             
         }, function (docs) {
             docs.forEach(function (doc) {
+                console.log(doc);
+
                  if (doc.coddoc==GlobalCoddoc){
+
                     if(mapainiciado==false){
-               
-                        map = L.map('map-container').setView([doc.lat, doc.long], 15).addLayer(osm);
-                        
-                        L.marker([doc.lat, doc.long])
+                        map.setView([doc.lat, doc.long], 15).addLayer(osm);  
+                        mapainiciado = true;
+                    }
+
+                    L.marker([doc.lat, doc.long])
                         .addTo(map)
                         .bindPopup(doc.nomcliente + ' - ' + funciones.setMoneda(doc.totalventa, 'Q')) 
 
-                        mapainiciado = true;
-                    }else{
-                        L.marker([doc.lat, doc.long])
-                        .addTo(map)
-                        .bindPopup(doc.nomcliente + ' - ' + funciones.setMoneda(doc.totalventa, 'Q')) 
-                    }
                     //.openPopup();
                 }
                
