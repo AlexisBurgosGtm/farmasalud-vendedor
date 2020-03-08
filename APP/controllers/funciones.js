@@ -497,7 +497,13 @@ let funciones = {
       var D = '0' + di;
       let DDI 
       if(D.length==3){DDI=di}else{DDI=D}
-      fecha = y + '-' + m + '-' + DDI;
+      
+      ma = m;
+      var MA = '0' + ma;
+      let DDM 
+      if(MA.length==3){DDM=ma}else{DDM=MA}
+
+      fecha = y + '-' + DDM + '-' + DDI;
       return fecha;
     },
     quitarCaracteres: ( texto, reemplazarQue, reemplazarCon, ignorarMayMin) =>{

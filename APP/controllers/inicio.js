@@ -4,6 +4,15 @@ window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndex
       window.alert("Lo siento pero su Teléfono no soporta el guardado de Datos");
     }
 
+    if (navigator.storage && navigator.storage.persist)
+          navigator.storage.persist()
+            .then(function(persistent){
+            if (persistent){
+                console.log("Storage will not be cleared except by explicit user action");
+            }else{
+              console.log("Storage may be cleared by the UA under storage pressure");
+          }});
+
 //INSTALACION APP
 let btnInstalarApp = document.getElementById('btnInstalarApp');
 btnInstalarApp.hidden = true;
