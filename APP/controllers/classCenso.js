@@ -16,12 +16,15 @@ classCenso={
             let lat,long;
             lat = document.getElementById('txtLatitud');
             long = document.getElementById('txtLongitud');
-
+            console.log('obteniendo gps');
             classCenso.ObtenerUbicacion(lat,long);
         });
 
         btnNuevoCenso.addEventListener('click', ()=>{
             btnNuevoCenso.style = "visibility:hidden";
+            $("#ModalNuevoCliente").modal('show');
+            btnObtenerUbicacion.click();
+
         });
 
         btnCancelarCenso.addEventListener('click', ()=>{
@@ -39,12 +42,13 @@ classCenso={
                     nombre = document.getElementById('txtNomcliente').value;
                     direccion = document.getElementById('txtDircliente').value;
                     codmuni = document.getElementById('cmbMunicipio').value;
+                    coddepto = document.getElementById('cmbDepartamento').value;
                     telefono = document.getElementById('txtTelefono').value;
                     lat = document.getElementById('txtLatitud').innerText;
                     long = document.getElementById('txtLongitud').innerText;
                     obs = document.getElementById('txtObs').value;
         
-                    classCenso.InsertCliente(GlobalEmpnit,GlobalCodven,nit,nombre,direccion,codmuni,1,telefono,lat,long,obs);
+                    classCenso.InsertCliente(GlobalEmpnit,GlobalCodven,nit,nombre,direccion,codmuni,coddepto,telefono,lat,long,obs);
                     classCenso.SelectCensoAll(GlobalEmpnit,GlobalCodven,document.getElementById('tblCenso'));
                     btnCancelarCenso.click();
                 }
@@ -52,7 +56,9 @@ classCenso={
 
         })
 
-        classCenso.GetListaMunicipios(document.getElementById('cmbMunicipio'));
+        funciones.getComboMunicipios('cmbMunicipio');
+        funciones.getComboDepartamentos('cmbDepartamento');
+        
 
     },
     
@@ -65,11 +71,23 @@ classCenso={
             censo.forEach(function (cliente) {
                 if (cliente.empnit==empnit){
                     if (cliente.codven==codven){
-                        HtmlString += "<tr Id=" + cliente.Id + ">" + 
-                        "<td class='col-5'>" + cliente.nomcliente + "</td>" + 
-                        "<td class='col-5'>" + cliente.dircliente + "</td>" + 
-                        "<td class='col-1'>" + cliente.telefono + "</td>" + 
-                        "<td class='col-1'><button class='btn btn-round btn-icon btn-danger btn-sm' onclick='classCenso.DeleteCliente(" + cliente.Id +");'>x</button></td></tr>";                        
+                        
+                        HtmlString += ` <tr Id=${cliente.Id}>
+                                <td class='col-5'>${cliente.nomcliente}</td>
+                                <td class='col-5'>${cliente.dircliente}</td>
+                                <td class='col-1'>${cliente.telefono}</td> 
+                                <td><button class="btn btn-round btn-icon btn-success btn-sm" 
+                                    onclick="classCenso.sendCliente(${cliente.Id},'${cliente.empnit}',${cliente.codven},
+                                        '${cliente.nit}','${cliente.nomcliente}','${cliente.dircliente}',
+                                        ${cliente.codmun},${cliente.coddep},'${cliente.telefono}',
+                                        '${cliente.latitud}','${cliente.longitud}','${cliente.obs}');">
+                                        Env
+                                </button>
+                                <td class='col-1'>
+                                    <button class='btn btn-round btn-icon btn-danger btn-sm' onclick='classCenso.DeleteCliente("${cliente.Id}");'>x</button>
+                                </td>
+                            </tr>`;                        
+                                
                     }
                 }
 
@@ -92,6 +110,7 @@ classCenso={
     },
 
     InsertCliente: async (empnit,codven,nit,nombre,direccion,codmunicipio,coddepartamento,telefono,latitud,longitud,obs)=>{
+                
         var data = {
             empnit:empnit,
             codven:codven,
@@ -105,6 +124,8 @@ classCenso={
             longitud:longitud,
             obs:obs
         };
+
+
         DbConnection = new JsStore.Instance(DbName);
         await DbConnection.insert({Into: "censo",Values: [data]},
                 function (rowsAdded) {
@@ -115,6 +136,7 @@ classCenso={
                     console.log(err);
                     funciones.AvisoError('No se puedo Guardar este Cliente, error de base de datos');
                 })
+        
     },
 
     DeleteCliente: (id)=>{
@@ -142,12 +164,7 @@ classCenso={
     GetLatLong: ()=>{
 
     },
-    GetListaMunicipios: (ComboboxContainer)=>{
-        let lista = `<option value="1">GUATEMALA</option>
-                     ` 
-
-        ComboboxContainer.innerHTML = lista;
-    },
+    
     LimpiarCampos: ()=>{
         document.getElementById('txtNit').value = '';
         document.getElementById('txtNomcliente').value= '';
@@ -156,5 +173,30 @@ classCenso={
         document.getElementById('txtObs').value= '';
         document.getElementById('txtLatitud').innerText = '0';
         document.getElementById('txtLongitud').innerText= '0';
+    },
+    sendCliente : (id,empnit,codven,nit,nombre,direccion,codmunicipio,coddepartamento,telefono,latitud,longitud,obs)=>{
+        let url =''
+        var data = {
+            empnit:empnit,
+            codven:codven,
+            nit:nit,
+            nomcliente:nombre,
+            dircliente:direccion,
+            codmun:codmunicipio,
+            coddep:coddepartamento,
+            telefono:telefono,
+            latitud:latitud,
+            longitud:longitud,
+            obs:obs
+        };
+        
+        axios.post(url,data)
+            .then((response) => {
+                funciones.Aviso('Cliente enviado exitosamente');
+                //classCenso.DeleteCliente(id);
+            }, (error) => {
+                console.log(error)
+                funciones.AvisoError('No se pudo enviar el cliente');
+            });
     }
 }
