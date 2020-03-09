@@ -4,6 +4,17 @@ const config = require('./config');
 const execute = require('./connection');
 
 
+//INSERTA UN NUEVO CLIENTE EN CENSO
+router.post('/censo/insert', async(req,res)=>{
+	const {empnit,fecha,codven,nit,negocio,nomcliente,dircliente,codmun,coddep,telefono,concre,latitud,longitud,obs,token} = req.body;
+	
+
+	let qry = `INSERT INTO CENSO_CLIENTES (EMPNIT,CODCLIENTE,NEGOCIO,NIT,NOMCLIE,DIRCLIE,CODMUN,CODDEPTO,TELEFONOS,EMAIL,CODVEN,LAT,LONG,OBS,CONCRE,CODRUTA,GIRO,LASTUPDATE,TOKEN) 
+				VALUES ('${empnit}','0','${negocio}','${nit}','${nomcliente}','${dircliente}',${codmun},${coddep},'${telefono}','SN',${codven},'${latitud}','${longitud}','${obs}','${concre}',0,'GENERAL','${fecha}','${token}')`;
+
+				console.log(qry);
+	execute.Query(res,qry);
+})
 
 // OBTIENE TODAS LAS EMPRESAS
 router.get("/empresas/all", async(req,res)=>{

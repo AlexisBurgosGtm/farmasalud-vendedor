@@ -3,16 +3,16 @@
         <h5>Censo de Clientes</h5>
     </div>
 </div>
-<div class="card">
-    <div class="card-body">
+<div class="row">
+    
         <div class="table-responsive" id="contenedorCenso">
-            <table class="table">
-                <thead>
+            <table class="table table-hover table-striped">
+                <thead  class="bg-trans-gradient text-white"> 
                     <tr>
-                        <th>Cliente</th>
-                        <th>Direccion</th>
-                        <th>Telefono</th>
-                        <th></th>
+                        <td>Cliente</td>
+                        <td>Telefono</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody id="tblCenso">
@@ -21,7 +21,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    
 </div>
 
 <!-- Modal Opciones Pedido -->
@@ -37,6 +37,10 @@
                     <div class="form-group">
                         <label>NIT:</label>
                         <input id="txtNit" class="form-control" type="text" placeholder="Escriba el NIT ...">
+                    </div>
+                    <div class="form-group">
+                        <label>Negocio/Establecimiento:</label>
+                        <input id="txtNegocio" class="form-control" type="text" placeholder="nombre del negocio">
                     </div>
                     <div class="form-group">
                         <label>Nombre y Apellido:</label>
@@ -61,6 +65,13 @@
                     <div class="form-group">
                         <label>Telefonos:</label>
                         <input id="txtTelefono" class="form-control" type="number" placeholder="Telefono cliente">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de pago:</label>
+                        <select id="cmbConcre" class="form-control">
+                            <option value="CON">CONTADO</option>
+                            <option value="CRE">CREDITO</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Observaciones:</label>

@@ -3,7 +3,7 @@ window.onload = function () {
     initiateDb();
 };
 //nombre de la base de datos
-const DbName = "onne-ventas";
+const DbName = "onne-ventas-v2";
 
 function initiateDb() {
     
@@ -120,6 +120,10 @@ function getTbl() {
                 { Name: "latitud"},
                 { Name: "longitud"},
                 { Name: "obs", DataType: "string" },
+                { Name: "negocio", DataType: "string" },
+                { Name: "concre", DataType: "string" },
+                { Name: "giro", DataType: "string" },
+                { Name: "token", DataType: "string" },
            ]
         }
     //TABLA DOCPRODUCTOS

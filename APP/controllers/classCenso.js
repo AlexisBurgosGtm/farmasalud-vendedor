@@ -36,7 +36,7 @@ classCenso={
             .then((value) => {
        
                 if (value==true){
-                    let nit, nombre, direccion, codmuni, telefono, lat, long, obs;
+                    let nit, nombre, direccion, codmuni, telefono, lat, long, obs, negocio,concre;
 
                     nit = document.getElementById('txtNit').value;
                     nombre = document.getElementById('txtNomcliente').value;
@@ -47,8 +47,10 @@ classCenso={
                     lat = document.getElementById('txtLatitud').innerText;
                     long = document.getElementById('txtLongitud').innerText;
                     obs = document.getElementById('txtObs').value;
+                    negocio = document.getElementById('txtNegocio').value;
+                    concre = document.getElementById('cmbConcre').value;
         
-                    classCenso.InsertCliente(GlobalEmpnit,GlobalCodven,nit,nombre,direccion,codmuni,coddepto,telefono,lat,long,obs);
+                    classCenso.InsertCliente(GlobalEmpnit,GlobalCodven,nit,nombre,direccion,codmuni,coddepto,telefono,lat,long,obs,negocio,concre);
                     classCenso.SelectCensoAll(GlobalEmpnit,GlobalCodven,document.getElementById('tblCenso'));
                     btnCancelarCenso.click();
                 }
@@ -73,17 +75,22 @@ classCenso={
                     if (cliente.codven==codven){
                         
                         HtmlString += ` <tr Id=${cliente.Id}>
-                                <td class='col-5'>${cliente.nomcliente}</td>
-                                <td class='col-5'>${cliente.dircliente}</td>
-                                <td class='col-1'>${cliente.telefono}</td> 
-                                <td><button class="btn btn-round btn-icon btn-success btn-sm" 
+                                <td class=''>
+                                    ${cliente.nomcliente}
+                                    <br>
+                                    <small>${cliente.dircliente}</small>
+                                </td>
+                                <td class=''>${cliente.telefono}</td> 
+                                <td>
+                                    <button class="btn btn-round btn-icon btn-success btn-sm" 
                                     onclick="classCenso.sendCliente(${cliente.Id},'${cliente.empnit}',${cliente.codven},
                                         '${cliente.nit}','${cliente.nomcliente}','${cliente.dircliente}',
                                         ${cliente.codmun},${cliente.coddep},'${cliente.telefono}',
-                                        '${cliente.latitud}','${cliente.longitud}','${cliente.obs}');">
-                                        Env
-                                </button>
-                                <td class='col-1'>
+                                        '${cliente.latitud}','${cliente.longitud}','${cliente.obs}','${cliente.negocio}','${cliente.concre}');">
+                                        E
+                                    </button>
+                                </td>
+                                <td class=''>
                                     <button class='btn btn-round btn-icon btn-danger btn-sm' onclick='classCenso.DeleteCliente("${cliente.Id}");'>x</button>
                                 </td>
                             </tr>`;                        
@@ -109,20 +116,24 @@ classCenso={
         }
     },
 
-    InsertCliente: async (empnit,codven,nit,nombre,direccion,codmunicipio,coddepartamento,telefono,latitud,longitud,obs)=>{
-                
+    InsertCliente: async (empnit,codven,nit,nombre,direccion,codmunicipio,coddepartamento,telefono,latitud,longitud,obs,negocio,concre)=>{
+            
         var data = {
             empnit:empnit,
             codven:codven,
+            negocio:negocio,
+            giro: 'GENERAL',
             nit:nit,
             nomcliente:nombre,
             dircliente:direccion,
             codmun:codmunicipio,
             coddep:coddepartamento,
             telefono:telefono,
+            concre:concre,
             latitud:latitud,
             longitud:longitud,
-            obs:obs
+            obs:obs,
+            token:GlobalToken
         };
 
 
@@ -161,6 +172,25 @@ classCenso={
                 }
             })
     },
+    DeleteClienteSilent: (id)=>{
+        
+                    DbConnection.delete({
+                        From: 'censo',
+                        Where: {
+                            Id: Number(id)
+                        }
+                    }, function (rowsDeleted) {
+                        console.log(rowsDeleted + ' rows deleted');
+                        if (rowsDeleted > 0) {
+                            document.getElementById(id).remove();
+                            classCenso.SelectCensoAll(GlobalEmpnit,GlobalCodven,document.getElementById('tblCenso'));
+                            funciones.Aviso("Cliente eliminado con éxito");
+                        }
+                    }, function (error) {
+                        alert(error.Message);
+                    })
+                
+    },
     GetLatLong: ()=>{
 
     },
@@ -168,35 +198,57 @@ classCenso={
     LimpiarCampos: ()=>{
         document.getElementById('txtNit').value = '';
         document.getElementById('txtNomcliente').value= '';
+        document.getElementById('txtNegocio').value = '';
         document.getElementById('txtDircliente').value= '';
         document.getElementById('txtTelefono').value= '';
         document.getElementById('txtObs').value= '';
         document.getElementById('txtLatitud').innerText = '0';
         document.getElementById('txtLongitud').innerText= '0';
     },
-    sendCliente : (id,empnit,codven,nit,nombre,direccion,codmunicipio,coddepartamento,telefono,latitud,longitud,obs)=>{
-        let url =''
-        var data = {
-            empnit:empnit,
-            codven:codven,
-            nit:nit,
-            nomcliente:nombre,
-            dircliente:direccion,
-            codmun:codmunicipio,
-            coddep:coddepartamento,
-            telefono:telefono,
-            latitud:latitud,
-            longitud:longitud,
-            obs:obs
-        };
+    sendCliente : (id,empnit,codven,nit,nombre,direccion,codmunicipio,coddepartamento,telefono,latitud,longitud,obs,negocio,concre)=>{
+        funciones.Confirmacion('¿Está seguro que desea Enviar este Cliente?')
+        .then((value)=>{
+            if(value==true){
+                let url ='/api/censo/insert';
         
-        axios.post(url,data)
-            .then((response) => {
-                funciones.Aviso('Cliente enviado exitosamente');
-                //classCenso.DeleteCliente(id);
-            }, (error) => {
-                console.log(error)
-                funciones.AvisoError('No se pudo enviar el cliente');
-            });
+                var data = {
+                    empnit:empnit,
+                    codven:codven,
+                    negocio:negocio,
+                    nit:nit,
+                    nomcliente:nombre,
+                    dircliente:direccion,
+                    codmun:codmunicipio,
+                    coddep:coddepartamento,
+                    telefono:telefono,
+                    concre:concre,
+                    latitud:latitud,
+                    longitud:longitud,
+                    obs:obs,
+                    fecha:funciones.getFecha(),
+                    token:GlobalToken
+                };
+                
+                axios.post(url,data)
+                    .then((response) => {
+                        console.log(response);
+                        let data = response.data;
+                        if(data.rowsAffected[0]==1){
+                            funciones.Aviso('Cliente enviado exitosamente');
+                            classCenso.DeleteClienteSilent(id);
+                        }else{
+                            funciones.AvisoError('Se envió más de una fila')
+                        }
+                        
+                    }, (error) => {
+                        console.log(error)
+                        funciones.AvisoError('No se pudo enviar el cliente');
+                    });
+
+            }
+
+        })
+        
+        
     }
 }
