@@ -80,6 +80,7 @@ function VentasEditar(idPedido,nomcliente){
       }
     });
 };
+
 function VentasEliminar(correlativo){
   console.log('Eliminar id= ' + correlativo);
   funciones.Confirmacion('¿Está seguro que desea ELIMINAR este Pedido?')
@@ -93,6 +94,7 @@ function VentasEliminar(correlativo){
     }
   });
 };
+
 function VentasEnviar(idPedido){
   funciones.Confirmacion('¿Está seguro que desea ENVIAR este Pedido?')
   .then((value) => {
@@ -108,6 +110,7 @@ function VentasEnviar(idPedido){
     }
   });
 };
+
 //trae la vista de nueva venta
 function CrearNuevoPedido(){
 // Nuevo Pedido
@@ -172,17 +175,19 @@ async function AgregarListeners(){
   let btnBuscarProductoFiltro = document.getElementById('btnBuscarProductoFiltro');
   btnBuscarProductoFiltro.addEventListener('click',()=>{
     let cmbTipoProd = document.getElementById('cmbTipoProd');
-    loadPreciosVentas(txtFiltroProducto.value, cmbTipoProd.value);
+    let cmbTipoPrecio = document.getElementById('cmbTipoPrecio');
+    loadPreciosVentas(txtFiltroProducto.value, cmbTipoProd.value,cmbTipoPrecio.value);
   })
 
 }
+
 // lista de precios para agregarlos a la venta
-async function loadPreciosVentas(filtro,tipo){
+async function loadPreciosVentas(filtro,tipo,tipoprecio){
 
   let newsArticles = document.getElementById('contenedorVentas');
   newsArticles.innerHTML = GlobalLoader;
   
-  const response = await fetch(`${GlobalServerUrl}/api/productos/filtro?token=${GlobalToken}&filtro=${filtro}&tipo=${tipo}`);
+  const response = await fetch(`${GlobalServerUrl}/api/productos/filtro?token=${GlobalToken}&filtro=${filtro}&tipo=${tipo}&tipoprecio=${tipoprecio}`);
   const json = await response.json();        
   
   newsArticles.innerHTML = '';
@@ -200,9 +205,13 @@ async function loadPreciosVentas(filtro,tipo){
     if (article.EMPNIT==GlobalEmpnit){
       let despr = funciones.quitarCaracteres(article.DESPROD,'"'," pulg",true);     
       return `<tr class="">
-        <td class="col-7-sm col-7-md">${article.DESPROD} <br>
-            <small class="text-white bg-info">${article.CODMEDIDA} - Exist: ${article.EXISTENCIA}</small></td>
-        <td class="col-4-sm col-4-md"><b>${String(article.QPRECIO)}</b></td>
+        <td class="col-7-sm col-7-md">${article.DESPROD} 
+            <br>
+            <small class="text-info">COD:<b>${article.CODPROD}<b></small></td>
+        <td class="col-4-sm col-4-md"><b>${String(article.QPRECIO)}</b>
+            <br>
+            <small class="bg-warning">${article.CODMEDIDA} - Exist: ${article.EXISTENCIA}</small>
+        </td>
         <td class="col-1-sm col-1-md">
           <button class="btn btn-primary btn-circle" 
           onClick="CargarDatosProductoModal('${article.CODPROD}','${despr}','${article.CODMEDIDA}','${article.COSTO}','${article.PRECIO}','${article.QPRECIO}','${article.EQUIVALE}');">+</button>

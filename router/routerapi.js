@@ -37,11 +37,10 @@ router.get("/productos/all", async(req,res)=>{
 //OBTIENE LA LISTA DE PRODUCTOS Y PRECIOS CON EXISTENCIA FILTRADO
 router.get("/productos/filtro", async(req,res)=>{
 
-	let token = req.query.token;
-	let filtro = req.query.filtro;
-	let tipo = req.query.tipo;
-
-	let qry = `SELECT CODPROD,DESPROD,DESMARCA,CODMEDIDA,EQUIVALE,COSTO,PRECIO,concat('Q',PRECIO) as QPRECIO, EXISTENCIA, EMPNIT FROM PRECIOS WHERE TOKEN='${token}' AND DESPROD LIKE '%${filtro}%' AND TIPOPROD='${tipo}'`
+	const {token,filtro,tipo,tipoprecio} = req.query;
+		
+	let qry = `SELECT CODPROD,DESPROD,DESMARCA,CODMEDIDA,EQUIVALE,COSTO, ${tipoprecio} AS PRECIO,concat('Q',${tipoprecio}) as QPRECIO, EXISTENCIA, EMPNIT FROM PRECIOS
+	 WHERE TOKEN='${token}' AND DESPROD LIKE '%${filtro}%' AND TIPOPROD='${tipo}' OR TOKEN='${token}' AND CODPROD ='${filtro}' AND TIPOPROD='${tipo}' `
 	execute.Query(res,qry);
 
 });

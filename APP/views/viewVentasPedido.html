@@ -50,9 +50,6 @@
 
         <div class="modal-header">
           <label class="modal-title" id="">Agregue productos a la venta</label>
-          <!--
-          <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close"> << Regresar </button>
-          -->
         </div>
 
         <div class="modal-body">
@@ -65,6 +62,14 @@
                 <option value="E">EXTERNOS</option>
                 <option value="S">SERVICIOS</option>
               </select>
+              <div class="input-group-append">
+                <select class="form-control custom-select-sm" id="cmbTipoPrecio">
+                  <option value="PRECIO">PUBLICO</option>
+                  <option value="MAYOREOC">MAYOREO C</option>
+                  <option value="MAYOREOB">MAYOREO B</option>
+                  <option value="MAYOREOA">MAYOREO A</option>
+                </select>
+              </div>
               <div class="input-group-append">
                 <input type="search" class="form-control custom-select-sm" placeholder="Escriba para buscar producto.." id="txtFiltroProducto">
               </div>
