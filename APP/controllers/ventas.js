@@ -194,7 +194,7 @@ async function loadPreciosVentas(filtro,tipo,tipoprecio){
                           
   newsArticles.innerHTML =
                   `<table class="table table-responsive table-bordered table-fixed table-hover table-striped" id="tblProductosVentas">
-                    <thead>
+                    <thead class="bg-info text-white">
                       <tr>
                         <td class="col-7-sm col-7-md">Descripción</td>
                         <td class="col-4-sm col-4-md">Precio</td>
@@ -207,13 +207,13 @@ async function loadPreciosVentas(filtro,tipo,tipoprecio){
       return `<tr class="">
         <td class="col-7-sm col-7-md">${article.DESPROD} 
             <br>
-            <small class="text-info">COD:<b>${article.CODPROD}<b></small></td>
+            <small class="text-info"><b>${article.CODPROD}<b></small></td>
         <td class="col-4-sm col-4-md"><b>${String(article.QPRECIO)}</b>
             <br>
-            <small class="bg-warning">${article.CODMEDIDA} - Exist: ${article.EXISTENCIA}</small>
+            <small class="bg-amarillo">${article.CODMEDIDA} - Exist: ${article.EXISTENCIA}</small>
         </td>
         <td class="col-1-sm col-1-md">
-          <button class="btn btn-primary btn-circle" 
+          <button class="btn btn-info btn-circle" 
           onClick="CargarDatosProductoModal('${article.CODPROD}','${despr}','${article.CODMEDIDA}','${article.COSTO}','${article.PRECIO}','${article.QPRECIO}','${article.EQUIVALE}');">+</button>
         </td>
         </tr>`;

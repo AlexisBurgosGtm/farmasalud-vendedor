@@ -1,5 +1,5 @@
-        <div class="col-lg-8 col-md-8">
-            <div class="card card-user">
+        <div class="col-lg-4 col-xl-4 col-md-6 col-sm-12">
+            <div class="card card-user border-top-rounded border-bottom-rounded shadow">
                             
                 <div class="card-body">
                     <div class="text-center">
@@ -8,7 +8,7 @@
 
                     <div class="form-group">
                             
-                            <select class="form-control bg-info text-white text-center" id="cmbAplicacion">
+                            <select class="form-control text-center text-info" id="cmbAplicacion">
                                 <option value="SALES">VENTAS</option>
                                 <option value="DELIVERY">REPARTO</option>
                                 <option value="SUPERVISOR">SUPERVISOR</option>
@@ -17,30 +17,35 @@
 
                     <div class="form-group">
 
-                            <label>Token:</label>
+                            <label>Token Cliente:</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Usuario..." id="txtUser">
+                                <input type="text" class="form-control" placeholder="Escriba el Token de su Empresa..." id="txtUser">
                                 <div class="input-group-append">
-                                    <button class="btn btn-info" onclick="getDataToken();">...</button>
+                                    <button class="btn btn-info hand" onclick="getDataToken();">...</button>
                                 </div>
                             </div>
                             
                     </div>
 
-                    <div class="form-group" id="container_empresa">
-                        <label>Empresa:</label>
-                        <select class="form-control" id="cmbEmpresas">
-                        </select>
-                        <br>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xl-6">
-                            <label>Contraseña:</label>
-                            <input type="password" class="form-control" placeholder="Contraseña..." id="txtPass">
+                    <div class="" id="container_empresa">
+                        <div class="form-group">
+                            <label>Empresa:</label>
+                            <select class="form-control border-bottom border-left border-secondary border-right-0 border-top-0" id="cmbEmpresas">
+                            </select>
                         </div>
-                    </div>
                         
-                    <div class="row form-group" id="container_btniniciar">
-                        <button class="btn btn-danger btn-xl btn-rounded form-control" id="btnIniciar" onclick="fcnLogin();">
-                            Iniciar
+                        <div class="form-group">
+                            <label>Contraseña:</label>
+                            <input type="password" class="form-control border-bottom border-left border-secondary border-right-0 border-top-0" placeholder="Contraseña..." id="txtPass">
+                        </div>
+
+                    </div>
+
+                    <hr class="solid">
+                        
+                    <div class="form-group" align="right" id="container_btniniciar">
+                        <button class="btn btn-info btn-xl btn-circle shadow hand" id="btnIniciar" onclick="fcnLogin();">
+                            <i class="fal fa-chevron-right"></i>
                         </button>                       
                     </div>
                 </div>

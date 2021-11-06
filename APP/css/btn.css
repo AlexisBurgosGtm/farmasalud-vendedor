@@ -1,3 +1,25 @@
+.border-top-rounded{
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+  
+.border-bottom-rounded{
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+
+.hand {
+    cursor: pointer;
+}
+
+.negrita {
+    font-weight: bold;
+}
+.bg-amarillo{
+    background-color: rgb(255, 255, 217);
+}
+
 @media print{
     .oculto-impresion, .oculto-impresion *{
         display:none !important;

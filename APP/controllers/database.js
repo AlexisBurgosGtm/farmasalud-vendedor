@@ -404,6 +404,7 @@ function dbTotalTempVentas(contenedor) {
         
         let varSubtotal = parseFloat(0);
         let varSubtotalCosto = parseFloat(0);
+     
         
         productos.forEach(function (prod) {
            varSubtotal += parseFloat(prod.subtotal);
@@ -412,6 +413,7 @@ function dbTotalTempVentas(contenedor) {
             console.log(error);
         })
         contenedor.innerHTML = funciones.setMoneda(varSubtotal,'Q');
+       
         GlobalTotalVenta = varSubtotal;
         GlobalTotalCosto = varSubtotalCosto;
     });
@@ -624,12 +626,17 @@ function dbInsertDocproductos(coddoc,correlativo,empnit) {
 function dbSelectDocumentos(contenedor,st) {
     let titulo =document.getElementById('lbTituloVentas');
     let contTitulo = document.getElementById('containerDocumentos');
+    let iconoMenu = document.getElementById('iconoMenu');
+
+    let pedidos = 0;
     if (st==Number(1)){
         titulo.innerText='Pedidos Pendientes';
         contTitulo.style = "background-color:#2196F3"
+        iconoMenu.innerHTML = '<i class="fal fa-archive"></i>';
     }else{
         titulo.innerText='Pedidos Enviados'
         contTitulo.style = "background-color:#fd3995"
+        iconoMenu.innerHTML = '<i class="fal fa-paper-plane"></i>';
     };
 
     DbConnection.select({
@@ -638,6 +645,7 @@ function dbSelectDocumentos(contenedor,st) {
 
         var HtmlString = "";
         documentos.forEach(function (doc) {
+            pedidos += 1;
             if (doc.empnit==GlobalEmpnit){
                 if (doc.st==Number(st)){
                     if (doc.coddoc==GlobalCoddoc){
@@ -663,6 +671,7 @@ function dbSelectDocumentos(contenedor,st) {
             console.log(error);
         })
         contenedor.innerHTML = HtmlString;
+        document.getElementById('txtTotalPedidos').innerText = pedidos;
         classDbOp.GetTotalVentas('txtTotalVenta');
     });
    

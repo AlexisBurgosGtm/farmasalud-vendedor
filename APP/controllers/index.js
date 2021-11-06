@@ -38,14 +38,24 @@ async function fcnLogin(){
     };
         
     if(GlobalTipoApp=='SALES'){
+        let btnLogin = document.getElementById('btnIniciar');
+
+        btnLogin.innerHTML ='<i class="fal fa-chevron-right fa-spin"></i>';
+        btnLogin.disabled = true;
+
         try {
             const response = await fetch(`${GlobalServerUrl}/api/usuarios/login?token=${GlobalToken}`)
             const json = await response.json();
-    
+            
+            btnLogin.innerHTML ='<i class="fal fa-chevron-right"></i>';
+            btnLogin.disabled = false;
+
             json.recordset.map(ComprobarVendedor).join('\n');
        
         } catch (error) {
-          console.log(error);
+            console.log(error);
+            btnLogin.innerHTML ='<i class="fal fa-chevron-right"></i>';
+            btnLogin.disabled = false;
         }
     };
 
