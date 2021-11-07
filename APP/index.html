@@ -449,11 +449,12 @@
 
         })
 
-   const socket = io();   
+   //const socket = io();   
 
    async function CargarComboEmpresas(){
-    console.log('antes de cargar empresas: ' + GlobalToken);
-            //carga la lista de empresas en el combobox
+        let btnGetToken = document.getElementById('btnGetToken');
+        btnGetToken.innerHTML = '<i class="fal fa-chevron-right fa-spin"></i>';
+
             try {
                 const response = await fetch(`${GlobalServerUrl}/api/empresas/all?token=${GlobalToken}`)
                 const json = await response.json();
@@ -463,10 +464,11 @@
                 comboboxemp.innerHTML = json.recordset.map((empresa)=>{
                 return `<option value="${empresa.EMPNIT}">${empresa.EMPNOMBRE}</option>`;        
                }).join('\n');
-   
+               btnGetToken.innerHTML = '<i class="fal fa-chevron-right"></i>';
             } catch (error) {
                 console.log(error);
                 funciones.AvisoError('No se pudo cargar la lista de empresas');
+                btnGetToken.innerHTML = '<i class="fal fa-chevron-right"></i>';
             }
    }
     

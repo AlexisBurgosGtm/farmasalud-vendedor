@@ -89,20 +89,7 @@ router.get("/reparto/repartidores/all", async(req,res)=>{
 	let qry = `SELECT EMPNIT,CODREP,NITREP,DESREP,DIRREP,TELREP,CONTACTO,TELCONTACTO,EMAIL,WHATSAPP,CLAVE FROM REPARTIDORES WHERE TOKEN=${token}`
 	execute.Query(res,qry);
 
-	/*
-	const sql = require('mssql')
-	let token = req.query.token
-	try {sql.close()} catch (error) {}
-			const pool = await sql.connect(config)		
-			try {
-				const result = await sql.query`SELECT EMPNIT,CODREP,NITREP,DESREP,DIRREP,TELREP,CONTACTO,TELCONTACTO,EMAIL,WHATSAPP,CLAVE FROM REPARTIDORES WHERE TOKEN=${token}`
-				console.dir('Repartidores cargados...');
-				res.send(result);
-			} catch (err) {
-				console.log(String(err));
-			}
-			sql.close()
-	*/
+
 });
 
 router.get("/reparto/usuarios/login", async(req,res)=>{
@@ -111,23 +98,7 @@ router.get("/reparto/usuarios/login", async(req,res)=>{
 	let qry = `SELECT EMPNIT,CODREP,DESREP,CLAVE FROM REPARTIDORES WHERE TOKEN=${token}`;
 	execute.Query(res,qry);
 
-	/*
-	const sql = require('mssql')
-	let token = req.query.token;
-	try {sql.close()} catch (error) {}
-		const pool = await sql.connect(sqlString)
-		try {
-			const result = await sql.query`SELECT EMPNIT,CODREP,DESREP,CLAVE FROM REPARTIDORES WHERE TOKEN=${token}`
-			console.dir('La consulta usuario se generó');
-			res.send(result);
-		
-		} catch (err) {
-			// ... error checks
-			res.send('Denegado');
-			console.log('Error en la consulta usuarios');
-		}
-		sql.close()
-		*/
+	
 });
 
 router.get("/reparto/enviospendientes", async(req,res)=>{
@@ -188,23 +159,7 @@ router.get("/usuarios/login", async(req,res)=>{
 
 	execute.Query(res, qry);
 
-	/*
-	const sql = require('mssql')
-	let token = req.query.token;
-	try {sql.close()} catch (error) {}
-		const pool = await sql.connect(sqlString)
-		try {
-			const result = await sql.query`SELECT CODVEN, NOMVEN, CLAVE, CODDOC,EMPNIT FROM VENDEDORES WHERE TOKEN=${token}`
-			console.dir('La consulta usuario se generó');
-			res.send(result);
-		
-		} catch (err) {
-			// ... error checks
-			res.send('Denegado');
-			console.log('Error en la consulta usuarios');
-		}
-		sql.close()
-	*/
+	
 });
 
 // INSERTA DATOS EN LA TABLA DOCUMENTOS DEL SERVER

@@ -218,3 +218,27 @@ function StartRecognition(){
         
     }
 }
+
+
+
+let Navegar = {
+    listaventas:()=>{
+        funciones.loadView('./views/viewVentas.html')
+        .then(()=>{
+            dbSelectDocumentos(document.getElementById('tblDocumentos'),1);
+        }); 
+    },
+    mapa:()=>{
+        funciones.loadView('./views/viewVentasMap.html')
+        .then(()=>{
+            classDbOp.GetRecorrido();   
+        });
+    },
+    censo:()=>{
+        funciones.loadView('./views/viewCenso.html')
+        .then(()=>{
+            classCenso.CargarFuncionesCenso();
+            classCenso.SelectCensoAll(GlobalEmpnit,GlobalCodven,document.getElementById('tblCenso'));
+        }); 
+    }
+}

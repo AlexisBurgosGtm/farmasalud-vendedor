@@ -354,12 +354,12 @@ function dbSelectTempVentas(contenedor) {
 
         var HtmlString = "";
         productos.forEach(function (prod) {
-            HtmlString += "<tr Id=" + prod.Id + ">" + 
-            "<td class=''>" + prod.desprod + "<br><small class='text-white bg-secondary'>" + prod.codmedida + ' - ' + funciones.setMoneda(prod.precio,'Q') + "</small></td>" + 
+            HtmlString += "<tr class='border-bottom border-info' Id=" + prod.Id + ">" + 
+            "<td class=''>" + prod.desprod + "<br><small class='negrita'>" + prod.codmedida + ' - ' + funciones.setMoneda(prod.precio,'Q') + "</small></td>" + 
             "<td><h3 class='text-danger'>" + prod.cantidad + "</h3></td>" + 
             "<td class=''>" + funciones.setMoneda(prod.subtotal,'Q') + "</td>" +
             "<td class=''>" + 
-              "<button class='btn btn-round btn-icon btn-danger btn-circle' onclick='dbDeleteTempProducto(" + prod.Id +");'> x </button>" + 
+              "<button class='btn btn-round btn-icon btn-danger btn-circle' onclick='dbDeleteTempProducto(" + prod.Id +");'><i class='fal fa-trash'></i></button>" + 
             "</td></tr>";
         }, function (error) {
             console.log(error);

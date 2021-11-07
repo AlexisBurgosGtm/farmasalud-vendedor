@@ -20,9 +20,8 @@ self.addEventListener('install', function(evt) {
 });
 
 self.addEventListener('fetch', function(evt) {
-  var req = evt.request.clone();
-  console.log('service fetch: ' + req);
-  /*
+ return;
+
   if (navigator.onLine){
     var req = evt.request.clone();
     if (req.clone().method == "GET") {
@@ -34,7 +33,6 @@ self.addEventListener('fetch', function(evt) {
       evt.respondWith(fromCache(evt.request));
     }
   }
-  */
 
 });
 

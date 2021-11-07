@@ -204,7 +204,7 @@ async function loadPreciosVentas(filtro,tipo,tipoprecio){
   json.recordset.map((article)=>{
     if (article.EMPNIT==GlobalEmpnit){
       let despr = funciones.quitarCaracteres(article.DESPROD,'"'," pulg",true);     
-      return `<tr class="">
+      return `<tr class="border-info border-bottom">
         <td class="col-7-sm col-7-md">${article.DESPROD} 
             <br>
             <small class="text-info"><b>${article.CODPROD}<b></small></td>
@@ -230,6 +230,7 @@ function fcnCancelarVenta(){
   .then((value) => {
       if (value==true){
           dbDeleteTempProductoAll('SI');
+          Navegar.listaventas();
       };
     });
 }
