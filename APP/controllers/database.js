@@ -416,6 +416,15 @@ function dbTotalTempVentas(contenedor) {
        
         GlobalTotalVenta = varSubtotal;
         GlobalTotalCosto = varSubtotalCosto;
+        try {
+            if(varSubtotal.toString()=='0'){
+                document.getElementById('btnGuardarVenta').style = "visibility:hidden";
+            }else{
+                document.getElementById('btnGuardarVenta').style = "visibility:visible";
+            }
+        } catch (error) {
+            
+        }
     });
 };
 
