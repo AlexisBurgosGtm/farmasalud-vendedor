@@ -327,6 +327,7 @@ async function AgregarCliente(){
                   let txtBusquedaCliente = document.getElementById('txtBusquedaCliente');
                   let btnBuscarCliente= document.getElementById('btnBuscarCliente');
                   btnBuscarCliente.addEventListener('click',()=>{
+                    
                     cargarListaClientesPedido(txtBusquedaCliente.value);
                   });
                   txtBusquedaCliente.focus();
@@ -391,7 +392,10 @@ async function dbFinalizarPedido(){
 
 async function cargarListaClientesPedido(filtro){
 
-  
+  let btnBuscarC = document.getElementById('btnBuscarCliente');
+  btnBuscarC.innerHTML = '<i class="fal fa-search fa-spin"></i>';
+  btnBuscarC.disabled = true;
+
   const response = await fetch(`${GlobalServerUrl}/api/clientes/filtro?token=${GlobalToken}&filtro=${filtro}`);
   const json = await response.json();
               
@@ -405,16 +409,16 @@ async function cargarListaClientesPedido(filtro){
   json.recordset.map(
       (cliente)=>{
         if(cliente.EMPNIT==GlobalEmpnit){
-        str = str + `<tr>
-                        <td>${cliente.NOMCLIENTE}
+        str = str + `<tr class="border-bottom border-secondary">
+                        <td>${cliente.NOMCLIENTE} (Tel.${cliente.TELEFONOS})
                           <br>
                           <small class="text-danger">${cliente.DIRCLIENTE}, ${cliente.EMAIL}</small>
                         </td>
                         <td>
-                          <button class="btn btn-round btn-icon btn-primary btn-circle"
-                            data-toggle='modal' data-target='#ModalOpcionesObs'
-                            onclick="dbGuardarVenta('${cliente.CODCLIENTE}','${cliente.NOMCLIENTE}');">
-                            +
+                          <button class="btn btn-round btn-icon btn-primary btn-circle shadow"
+                              data-toggle='modal' data-target='#ModalOpcionesObs'
+                              onclick="dbGuardarVenta('${cliente.CODCLIENTE}','${cliente.NOMCLIENTE}');">
+                              <i class="fal fa-chevron-right"></i>
                           </button>
                         </td> 
                     </tr>`;
@@ -423,6 +427,9 @@ async function cargarListaClientesPedido(filtro){
   );
 
   newsArticles.innerHTML = str;
+
+  btnBuscarC.innerHTML = '<i class="fal fa-search"></i>Buscar';
+  btnBuscarC.disabled = false;
   
 };
 

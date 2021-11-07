@@ -222,6 +222,17 @@ function StartRecognition(){
 
 
 let Navegar = {
+    login:()=>{
+        funciones.loadView('./views/viewLogin.html','contenedor')
+        .then(async ()=>{
+            ControllerMenu('LOGIN');                  
+            container_empresa = document.getElementById('container_empresa');
+            container_empresa.style = "visibility:hidden";
+            container_btniniciar = document.getElementById('container_btniniciar');
+            container_btniniciar.style = "visibility:hidden";
+            //getDataToken();
+        })
+    },
     listaventas:()=>{
         funciones.loadView('./views/viewVentas.html')
         .then(()=>{

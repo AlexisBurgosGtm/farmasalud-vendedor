@@ -436,18 +436,13 @@
   //carga la vista de login
    funciones.loadView('./views/viewLogin.html','contenedor')
         .then(async ()=>{
-            ControllerMenu('LOGIN');
-
-                        
+            ControllerMenu('LOGIN');                  
             container_empresa = document.getElementById('container_empresa');
             container_empresa.style = "visibility:hidden";
-    
             container_btniniciar = document.getElementById('container_btniniciar');
             container_btniniciar.style = "visibility:hidden";
-
-            getDataToken();
-
-        })
+            //getDataToken();
+    })
 
    //const socket = io();   
 
