@@ -209,7 +209,7 @@ async function loadPreciosVentas(filtro,tipo,tipoprecio){
       return `<tr class="border-info border-bottom ${strClass}">
                 <td class="col-7-sm col-7-md">${article.DESPROD} 
                     <br>
-                    <small class="text-info"><b>${article.CODPROD}//<b>${article.PRECIO}</small></td>
+                    <small class="text-info"><b>${article.CODPROD}<b></small></td>
                 <td class="col-4-sm col-4-md"><b>${String(article.QPRECIO)}</b>
                     <br>
                     <small class="bg-amarillo">${article.CODMEDIDA} - Exist: ${article.EXISTENCIA}</small>
