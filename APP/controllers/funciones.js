@@ -1,4 +1,22 @@
 let funciones = {
+  shareAppWhatsapp: ()=>{
+    let url= window.location.origin
+    swal({
+     text: 'Escriba el número a donde se enviará el link de la aplicación:',
+     content: "input",
+     button: {
+       text: "Enviar Whatsapp",
+       closeModal: true,
+     },
+   })
+   .then(numero => {
+     if (!numero) throw null;
+       let stn = '502' + numero.toString();
+       let msg = encodeURIComponent(`Aplicación Ventas DIST GARMEN`);
+           window.open('https://api.whatsapp.com/send?phone='+stn+'&text='+msg+url)
+   })   
+
+   },
     GetDataNit: async (idNit,idCliente,idDireccion)=>{
 
       return new Promise((resolve, reject) => {
